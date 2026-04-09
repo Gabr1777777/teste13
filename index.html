@@ -131,7 +131,6 @@
             border-radius: 50%;
             box-shadow: 0 0 25px #00ff00;
             overflow: hidden;
-            margin-bottom: 30px;
             animation: float 4s ease-in-out infinite;
         }
 
@@ -141,6 +140,22 @@
         }
 
         .profile-pic { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Estilos para Name e ID no perfil */
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff00;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .profile-id {
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
 
         .profile-details {
             list-style: none;
@@ -394,6 +409,9 @@
                 <div class="profile-pic-container">
                     <img src="https://i.imgur.com/HCn75BA.jpeg" alt="Foto de Perfil" class="profile-pic">
                 </div>
+                <div class="profile-name">Name</div>
+                <div class="profile-id">ID: 12345</div>
+                
                 <ul class="profile-details">
                     <li><strong>Signo:</strong> Peixes</li>
                     <li><strong>País:</strong> Brasil</li>
