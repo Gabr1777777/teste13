@@ -182,7 +182,7 @@
             text-shadow: 0 0 10px #00ff00;
         }
 
-        /* --- PLAYER SOFISTICADO --- */
+        /* PLAYER SOFISTICADO */
         .music-card {
             background: rgba(0, 34, 0, 0.8);
             border: 2px solid #00ff00;
@@ -191,10 +191,31 @@
             width: 300px;
             box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
             text-align: center;
+            overflow: hidden; /* Importante para o letreiro */
         }
 
         .music-card h3 { color: #00ff00; margin-bottom: 5px; }
-        .music-card p { font-size: 14px; margin-bottom: 20px; opacity: 0.8; }
+
+        /* LETREIRO (MARQUEE) */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 20px;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            font-size: 16px;
+            opacity: 0.8;
+            padding-left: 100%; /* Inicia fora da tela */
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
 
         .controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; }
         
@@ -212,9 +233,6 @@
             transition: 0.3s;
         }
         .play-btn:hover { transform: scale(1.1); box-shadow: 0 0 15px #00ff00; }
-
-        .progress-container { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 5px; margin-bottom: 15px; cursor: pointer; position: relative; }
-        .progress-bar { height: 100%; background: #00ff00; width: 0%; border-radius: 5px; }
 
         .volume-container { display: flex; align-items: center; gap: 10px; }
         .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #222; border-radius: 5px; outline: none; }
@@ -284,10 +302,8 @@
             <div id="musica" class="view">
                 <div class="music-card">
                     <h3 id="track-title">Eminem</h3>
-                    <p id="track-name">You don't know</p>
-                    
-                    <div class="progress-container" onclick="seek(event)">
-                        <div class="progress-bar" id="progress"></div>
+                    <div class="marquee-container">
+                        <span class="marquee-text" id="track-name">You don't know</span>
                     </div>
 
                     <div class="controls">
@@ -341,17 +357,6 @@
         }
 
         function setVolume(val) { audio.volume = val; }
-
-        audio.ontimeupdate = () => {
-            const progress = (audio.currentTime / audio.duration) * 100;
-            document.getElementById('progress').style.width = progress + "%";
-        };
-
-        function seek(event) {
-            const container = event.currentTarget;
-            const percent = event.offsetX / container.offsetWidth;
-            audio.currentTime = percent * audio.duration;
-        }
 
         audio.onended = () => {
             currentTrack = (currentTrack + 1) % playlist.length;
