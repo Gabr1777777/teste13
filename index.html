@@ -578,5 +578,93 @@
             setTimeout(() => heart.remove(), 1000);
         }
     </script>
+<style>
+    /* Estilização do Alerta Copyright */
+    #custom-alert {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #000;
+        border: 2px solid #00ff00;
+        color: #00ff00;
+        padding: 20px 40px;
+        z-index: 10000;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00ff00;
+        font-weight: bold;
+        text-align: center;
+        font-family: 'Segoe UI', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    /* Bloqueio visual de seleção de texto via CSS */
+    body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+</style>
+
+<div id="custom-alert">Copyright - Acesso Proibido</div>
+
+<script>
+    (function() {
+        // --- 1. FUNÇÃO PARA EXIBIR ALERTA ---
+        function showAlert() {
+            const alertBox = document.getElementById('custom-alert');
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 2000);
+        }
+
+        // --- 2. BLOQUEIO DE CLIQUE DIREITO ---
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showAlert();
+        });
+
+        // --- 3. BLOQUEIO DE TECLAS DE ATALHO (Ctrl+U, F12, Ctrl+Shift+I) ---
+        document.onkeydown = function(e) {
+            // F12
+            if (e.keyCode == 123) {
+                showAlert();
+                return false;
+            }
+            // Ctrl+Shift+I (Inspecionar) ou Ctrl+U (Exibir código fonte)
+            if ((e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) {
+                showAlert();
+                return false;
+            }
+        };
+
+        // --- 4. BLOQUEIO DE BARRA DE STATUS (Seu código fornecido) ---
+        const links = document.querySelectorAll('a');
+        links.forEach(link => {
+            const originalHref = link.getAttribute('href');
+            
+            link.addEventListener('mouseenter', function() {
+                link.removeAttribute('href');
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                if (originalHref) link.setAttribute('href', originalHref);
+            });
+            
+            link.addEventListener('mousedown', function() {
+                if (originalHref) link.setAttribute('href', originalHref);
+            });
+        });
+
+        // --- 5. PREVENÇÃO EXTRA DE SELEÇÃO VIA JS ---
+        document.onselectstart = function() { 
+            return false; 
+        };
+    })();
+</script>
 </body>
 </html>
