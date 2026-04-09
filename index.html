@@ -2,382 +2,150 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil Neon</title>
+    <title>Perfil Neon Corrigido</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #000;
-            overflow: hidden;
-            color: white;
-        }
-
-        /* Tela de Entrada */
+        body { margin: 0; padding: 0; background: #000; color: white; font-family: sans-serif; overflow: hidden; }
+        
+        /* Tela de Entrada com o GIF Verde */
         #entry-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* GIF animado verde de fundo */
-            background-image: url("https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXF4ZzRnd3Jicm9nZzRnd3Jicm9nZzRnd3Jicm9nZzRndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vzKZWFUufrtm/giphy.gif");
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            position: fixed; width: 100%; height: 100%;
+            background: url("https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXF4ZzRnd3Jicm9nZzRnd3Jicm9nZzRnd3Jicm9nZzRndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vzKZWFUufrtm/giphy.gif") center/cover;
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
         }
 
         #enter-btn {
-            padding: 20px 50px;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 50px;
-            color: white;
-            background: linear-gradient(-45deg, #00ff00, #ffffff, #1db954);
-            background-size: 400% 400%;
-            animation: gradientBG 3s ease infinite;
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
-            transition: transform 0.3s;
-            text-transform: uppercase;
+            padding: 15px 40px; font-size: 20px; cursor: pointer; border-radius: 50px; border: none;
+            background: linear-gradient(45deg, #00ff00, #fff); background-size: 200%;
+            animation: flow 3s infinite; box-shadow: 0 0 20px #00ff00; font-weight: bold;
+        }
+        @keyframes flow { 0% {background-position: 0%;} 50% {background-position: 100%;} 100% {background-position: 0%;} }
+
+        #profile-content { display: none; height: 100vh; position: relative; }
+
+        /* Nav Bar */
+        nav { 
+            display: flex; justify-content: center; background: rgba(0,0,0,0.9); 
+            padding: 15px; border-bottom: 2px solid #00ff00; 
+        }
+        nav button { 
+            background: none; border: 1px solid #00ff00; color: #00ff00; 
+            margin: 0 10px; padding: 8px 20px; cursor: pointer; border-radius: 5px;
         }
 
-        #enter-btn:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Conteúdo do Perfil */
-        #profile-content {
-            display: none;
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background-color: #0a0a0a;
-            overflow: hidden;
-        }
-
-        /* Barra de Navegação Horizontal */
-        #nav-bar {
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-bottom: 2px solid #00ff00;
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
-            position: absolute;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 10px 25px;
-            margin: 0 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .nav-btn:hover {
-            background-color: #00ff00;
-            color: black;
-            box-shadow: 0 0 15px #00ff00;
-        }
-
-        /* Área Principal */
-        #main-area {
-            margin-top: 80px;
-            height: calc(100vh - 80px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .view {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            text-align: center;
-            z-index: 10;
-        }
-
-        #inicio-view h1 {
-            font-size: 3rem;
-            color: #00ff00;
-            text-shadow: 0 0 20px #00ff00;
-        }
-
-        /* Sobre Mim com Efeito Digitando */
-        #sobre-view {
-            font-size: 22px;
-            line-height: 1.6;
-            min-height: 100px;
-        }
-
-        .typing::after {
-            content: "|";
-            animation: blink 0.7s infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* Galeria com Slide e Bordas Neon */
+        /* Galeria Neon */
         #galeria-view {
-            width: 90%;
-            max-width: 700px;
-            height: 450px;
-            position: relative;
-            border: 4px solid #00ff00;
-            border-radius: 15px;
-            box-shadow: 0 0 20px #00ff00, inset 0 0 20px #00ff00;
-            overflow: hidden;
-            background: #000;
+            display: none; width: 500px; height: 350px; margin: 50px auto;
+            border: 5px solid #00ff00; box-shadow: 0 0 15px #00ff00;
+            position: relative; overflow: hidden;
         }
+        .slide { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .active-slide { display: block; }
 
-        .slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* Botões Slide */
+        .btn-slide {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,255,0,0.3); border: none; color: white;
+            padding: 10px; cursor: pointer; font-size: 20px;
         }
+        .next { right: 0; } .prev { left: 0; }
 
-        /* Botões da Galeria */
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 16px;
-            color: #00ff00;
-            font-weight: bold;
-            font-size: 30px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 50%;
-            user-select: none;
-            transition: 0.3s;
-            z-index: 101;
-        }
-
-        .next { right: 10px; }
-        .prev { left: 10px; }
-
-        .prev:hover, .next:hover {
-            background-color: #00ff00;
-            color: black;
-        }
-
-        /* Player de Música */
-        #musica-view {
-            background: rgba(20, 20, 20, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #00ff00;
-        }
-
-        .playlist-item {
-            padding: 12px;
-            margin: 5px 0;
-            cursor: pointer;
-            border-radius: 8px;
-            background: #1a1a1a;
-            transition: 0.3s;
-            text-align: left;
-        }
-
-        .active-song {
-            background-color: #00ff00 !important;
-            color: black;
-            font-weight: bold;
-        }
-
-        /* Chuva de Corações Verde Neon */
-        .heart {
-            position: absolute;
-            color: #00ff00;
-            text-shadow: 0 0 8px #00ff00;
-            user-select: none;
-            pointer-events: none;
-            z-index: 1;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        .show { display: block !important; }
-        .flex-show { display: flex !important; }
+        /* Corações */
+        .heart { position: absolute; color: #00ff00; animation: fall 4s linear forwards; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
+        
+        .view { text-align: center; padding-top: 50px; }
+        #sobre-view { font-size: 20px; padding: 20px; }
     </style>
 </head>
 <body>
 
-    <div id="entry-screen">
-        <button id="enter-btn">Entrar</button>
-    </div>
+<div id="entry-screen">
+    <button id="enter-btn" onclick="entrar()">ENTRAR</button>
+</div>
 
-    <div id="profile-content">
-        <div id="nav-bar">
-            <button class="nav-btn" onclick="showView('inicio')">Inicio</button>
-            <button class="nav-btn" onclick="showView('sobre')">Sobre Mim</button>
-            <button class="nav-btn" onclick="showView('galeria')">Galeria</button>
-            <button class="nav-btn" onclick="showView('musica')">Música</button>
-        </div>
+<div id="profile-content">
+    <nav>
+        <button onclick="show('inicio')">Início</button>
+        <button onclick="show('sobre')">Sobre Mim</button>
+        <button onclick="show('galeria')">Galeria</button>
+        <button onclick="show('musica')">Música</button>
+    </nav>
 
-        <div id="main-area">
-            <div id="inicio-view" class="view">
-                <h1>Seja Bem-vindo</h1>
-                <p>Explore o perfil usando o menu acima.</p>
-            </div>
+    <div id="inicio" class="view"><h1>Bem-vindo ao Perfil</h1></div>
+    
+    <div id="sobre" class="view" style="display:none"><div id="typing"></div></div>
 
-            <div id="sobre-view" class="view"></div>
-
-            <div id="galeria-view" class="view">
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-                <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-                <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-                <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-                <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-                <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-                <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
-
-            <div id="musica-view" class="view">
-                <h2 style="color: #00ff00;">Tocando Agora</h2>
-                <div id="playlist-container"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const entryScreen = document.getElementById('entry-screen');
-        const profileContent = document.getElementById('profile-content');
-        const enterBtn = document.getElementById('enter-btn');
-        const views = document.querySelectorAll('.view');
-        
-        const playlist = [
-            { name: "Eminem - You dont know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1" },
-            { name: "The Sound of Silence – Rising to the Night", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1" },
-            { name: "Desireless - Voyage Voyage", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=0yenl8sh&raw=1" }
-        ];
-
-        let currentSongIndex = 0;
-        let audioPlayer = new Audio();
-        let slideIndex = 1;
-        let typingTimeout;
-
-        // Botão Entrar
-        enterBtn.addEventListener('click', () => {
-            entryScreen.style.display = 'none';
-            profileContent.classList.add('show');
+    <div id="galeria" class="view" style="display:none">
+        <div id="galeria-view">
+            <img class="slide active-slide" src="https://i.imgur.com/a1pK0hL.jpg">
+            <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
+            <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
+            <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
+            <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
+            <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
+            <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
+            <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
+            <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
+            <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
             
-            // Iniciar Música
-            loadSong(0);
-            audioPlayer.play().catch(e => console.log("Erro ao tocar música:", e));
-            audioPlayer.addEventListener('ended', () => {
-                currentSongIndex = (currentSongIndex + 1) % playlist.length;
-                loadSong(currentSongIndex);
-                audioPlayer.play();
-            });
+            <button class="btn-slide prev" onclick="move(-1)">❮</button>
+            <button class="btn-slide next" onclick="move(1)">❯</button>
+        </div>
+    </div>
 
-            // Chuva de Corações
-            setInterval(createHeart, 300);
-            showView('inicio');
-        });
+    <div id="musica" class="view" style="display:none"><h2>Tocando Playlist Neon...</h2></div>
+</div>
 
-        function loadSong(index) {
-            currentSongIndex = index;
-            audioPlayer.src = playlist[index].url;
-            updatePlaylistUI();
-        }
+<script>
+    const audio = new Audio();
+    const playlist = [
+        "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1",
+        "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1"
+    ];
+    let trackIdx = 0;
 
-        function updatePlaylistUI() {
-            const container = document.getElementById('playlist-container');
-            container.innerHTML = '';
-            playlist.forEach((song, i) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item' + (i === currentSongIndex ? ' active-song' : '');
-                item.textContent = song.name;
-                item.onclick = () => { loadSong(i); audioPlayer.play(); };
-                container.appendChild(item);
-            });
-        }
+    function entrar() {
+        document.getElementById('entry-screen').style.display = 'none';
+        document.getElementById('profile-content').style.display = 'block';
+        playMusic();
+        setInterval(createHeart, 300);
+    }
 
-        // Navegação
-        function showView(viewId) {
-            views.forEach(v => v.classList.remove('show', 'flex-show'));
-            clearTimeout(typingTimeout);
-            const sobre = document.getElementById('sobre-view');
-            sobre.textContent = "";
+    function playMusic() {
+        audio.src = playlist[trackIdx];
+        audio.play();
+        audio.onended = () => { trackIdx = (trackIdx + 1) % playlist.length; playMusic(); };
+    }
 
-            if (viewId === 'galeria') {
-                document.getElementById('galeria-view').classList.add('flex-show');
-                showSlides(slideIndex);
-            } else if (viewId === 'sobre') {
-                document.getElementById('sobre-view').classList.add('show');
-                typeWriter("Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.", 0);
-            } else {
-                document.getElementById(viewId + '-view').classList.add('show');
-            }
-        }
+    function show(id) {
+        ['inicio','sobre','galeria','musica'].forEach(v => document.getElementById(v).style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        if(id === 'sobre') startTyping();
+    }
 
-        // Efeito Digitando
-        function typeWriter(text, i) {
-            const el = document.getElementById('sobre-view');
-            if (i < text.length) {
-                el.classList.add('typing');
-                el.textContent += text.charAt(i);
-                typingTimeout = setTimeout(() => typeWriter(text, i + 1), 50);
-            } else {
-                el.classList.remove('typing');
-            }
-        }
+    function startTyping() {
+        const txt = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
+        let i = 0; document.getElementById('typing').innerHTML = "";
+        function type() { if(i < txt.length) { document.getElementById('typing').innerHTML += txt.charAt(i); i++; setTimeout(type, 50); } }
+        type();
+    }
 
-        // Galeria Slide
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
+    let slideIdx = 0;
+    function move(n) {
+        const slides = document.getElementsByClassName('slide');
+        slides[slideIdx].classList.remove('active-slide');
+        slideIdx = (slideIdx + n + slides.length) % slides.length;
+        slides[slideIdx].classList.add('active-slide');
+    }
 
-        function showSlides(n) {
-            let slides = document.querySelectorAll(".slide");
-            if (n > slides.length) slideIndex = 1;
-            if (n < 1) slideIndex = slides.length;
-            slides.forEach(s => s.style.display = "none");
-            slides[slideIndex-1].style.display = "block";
-        }
-
-        // Corações
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '💚';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
-            profileContent.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }
-    </script>
+    function createHeart() {
+        const h = document.createElement('div');
+        h.className = 'heart'; h.innerHTML = '💚';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.fontSize = Math.random() * 20 + 10 + 'px';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 4000);
+    }
+</script>
 </body>
 </html>
