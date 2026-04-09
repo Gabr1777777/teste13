@@ -3,453 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Meu Perfil Neon</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            overflow: hidden; /* Prevent scrolling for the entry screen */
-        }
-
-        /* Entry Screen */
-        #entry-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("https://i.imgur.com/vzKZWFU.gif"); /* Replace with your actual gif URL if vzKZWFUufrtm.gif is not direct */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        /* Tela de Entrada */
+        #entry-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXF4ZzRnd3Jicm9nZzRnd3Jicm9nZzRnd3Jicm9nZzRndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vzKZWFUufrtm/giphy.gif') no-repeat center center;
             background-size: cover;
-            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            transition: opacity 1s ease;
         }
 
         #enter-btn {
-            padding: 20px 40px;
+            padding: 20px 50px;
             font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
             cursor: pointer;
             border: none;
             border-radius: 50px;
-            color: white;
-            background: linear-gradient(-45deg, #1db954, #1ed760, #ffffff);
-            background-size: 400% 400%;
-            animation: gradientBG 5s ease infinite;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-            transition: transform 0.3s;
+            color: #fff;
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: gradientAnim 3s ease infinite;
+            box-shadow: 0 0 20px #00ff00;
         }
 
-        #enter-btn:hover {
-            transform: scale(1.1);
+        @keyframes gradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Profile Content */
+        /* Perfil Principal */
         #profile-content {
-            display: none; /* Initially hidden */
-            position: relative;
-            width: 100%;
+            display: none;
             height: 100vh;
-            background-color: #121212;
-            color: white;
-            overflow: hidden; /* For heart rain */
+            flex-direction: column;
+            background: #0a0a0a;
+            position: relative;
         }
 
-        /* Nav Bar */
-        #nav-bar {
-            width: 100%;
-            background-color: #1ed760;
+        /* Barra de Navegação */
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid #00ff00;
             display: flex;
             justify-content: center;
-            padding: 10px 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
+            padding: 15px;
+            z-index: 100;
         }
 
-        .nav-btn {
+        nav button {
             background: transparent;
-            border: 1px solid white;
-            color: white;
+            border: 1px solid #00ff00;
+            color: #00ff00;
             padding: 10px 20px;
             margin: 0 10px;
             cursor: pointer;
             border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: background 0.3s, color 0.3s;
+            transition: 0.3s;
         }
 
-        .nav-btn:hover {
-            background-color: white;
-            color: #1db954;
+        nav button:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px #00ff00;
         }
 
-        /* Content Area */
-        #main-area {
-            position: relative;
-            margin-top: 60px; /* Space for nav bar */
-            height: calc(100vh - 60px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Default/Inicio View */
-        #inicio-view {
-            text-align: center;
-        }
-
-        #inicio-view h1 {
-            color: #1ed760;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-        }
-
-        #inicio-view p {
-            max-width: 600px;
-        }
-
-        /* Sobre Mim View */
-        #sobre-view {
+        /* Áreas de Conteúdo */
+        .content-section {
             display: none;
-            font-size: 20px;
+            flex: 1;
+            padding: 40px;
             text-align: center;
-            padding: 20px;
-            white-space: pre-wrap; /* For typing effect */
+            color: white;
+            z-index: 10;
         }
 
-        /* Typing Effect Class */
-        .typing::after {
-            content: "|";
-            animation: blink 0.7s infinite;
+        .active { display: block; }
+
+        /* Sobre Mim - Efeito Escrevendo */
+        #text-typing {
+            font-size: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Galeria View */
-        #galeria-view {
-            display: none;
+        /* Galeria Slide */
+        .slider-container {
             width: 80%;
-            height: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 20px #00ff00;
             position: relative;
-            border: 5px solid #1ed760; /* Neon border */
-            border-radius: 10px;
-            box-shadow: 0 0 15px #1ed760, inset 0 0 15px #1ed760;
+            height: 400px;
             overflow: hidden;
         }
 
-        .slide {
-            display: none;
+        .slider-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Or cover, depending on desired look */
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 16px;
-            color: #1ed760;
-            font-weight: bold;
-            font-size: 24px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(30, 215, 96, 0.8);
-            color: white;
-        }
-
-        /* Music View */
-        #musica-view {
+            object-fit: cover;
             display: none;
-            text-align: center;
+        }
+
+        /* Música */
+        #player-ui {
+            background: #111;
             padding: 20px;
-            background-color: rgba(30, 30, 30, 0.9);
             border-radius: 10px;
-            border: 1px solid #1ed760;
+            border: 1px solid #00ff00;
+            display: inline-block;
         }
 
-        #playlist-container {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .playlist-item {
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        .playlist-item:hover {
-            background-color: #282828;
-        }
-
-        .active-song {
-            background-color: #1ed760 !important;
-            color: black;
-            font-weight: bold;
-        }
-
-        /* Heart Rain */
+        /* Chuva de corações */
         .heart {
             position: absolute;
-            color: #1ed760; /* Neon Green */
-            text-shadow: 0 0 5px #1ed760;
-            user-select: none;
+            color: #00ff00;
+            font-size: 20px;
             pointer-events: none;
             animation: fall linear forwards;
+            z-index: 5;
         }
 
         @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
+            to { transform: translateY(100vh); opacity: 0; }
         }
-
-        /* Utilities */
-        .show { display: block !important; }
-        .flex-show { display: flex !important; }
-
     </style>
 </head>
 <body>
 
     <div id="entry-screen">
-        <button id="enter-btn">Entrar</button>
+        <button id="enter-btn" onclick="startApp()">ENTRAR</button>
     </div>
 
     <div id="profile-content">
-        <div id="nav-bar">
-            <button class="nav-btn" onclick="showView('inicio')">Inicio</button>
-            <button class="nav-btn" onclick="showView('sobre')">Sobre Mim</button>
-            <button class="nav-btn" onclick="showView('galeria')">Galeria</button>
-            <button class="nav-btn" onclick="showView('musica')">Música</button>
+        <nav>
+            <button onclick="showSection('inicio')">Início</button>
+            <button onclick="showSection('sobre')">Sobre Mim</button>
+            <button onclick="showSection('galeria')">Galeria</button>
+            <button onclick="showSection('musica')">Música</button>
+        </nav>
+
+        <div id="inicio" class="content-section active">
+            <h1>Bem-vindo ao meu Perfil</h1>
+            <p>Escolha uma opção no menu acima.</p>
         </div>
 
-        <div id="main-area">
-            
-            <div id="inicio-view" class="view">
-                <h1>Bem-vindo!</h1>
-                <p>Este é o seu perfil personalizado. Use os botões acima para navegar pelas seções.</p>
-                <p>Sinta-se à vontade para explorar sobre mim, ver a galeria de fotos e ouvir sua playlist favorita.</p>
+        <div id="sobre" class="content-section">
+            <div id="text-typing"></div>
+        </div>
+
+        <div id="galeria" class="content-section">
+            <div class="slider-container">
+                <img src="https://picsum.photos/id/10/830/552" class="slide">
+                <img src="https://picsum.photos/id/20/830/552" class="slide">
+                <img src="https://picsum.photos/id/30/830/552" class="slide">
+                <img src="https://picsum.photos/id/10/830/552" class="slide">
+                <img src="https://picsum.photos/id/20/830/552" class="slide">
+                <img src="https://picsum.photos/id/30/830/552" class="slide">
+                <img src="https://picsum.photos/id/10/830/552" class="slide">
+                <img src="https://picsum.photos/id/20/830/552" class="slide">
+                <img src="https://picsum.photos/id/30/830/552" class="slide">
+                <img src="https://picsum.photos/id/10/830/552" class="slide">
             </div>
+        </div>
 
-            <div id="sobre-view" class="view">
-                </div>
-
-            <div id="galeria-view" class="view">
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-                <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-                <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-                
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-                <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-                <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-                <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-                <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-
-                <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
-
-            <div id="musica-view" class="view">
-                <h2>Playlist</h2>
-                <div id="playlist-container">
-                    </div>
+        <div id="musica" class="content-section">
+            <div id="player-ui">
+                <h3 id="track-name">A carregar...</h3>
+                <p>Playlist Neon</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Core UI Logic ---
-        const entryScreen = document.getElementById('entry-screen');
-        const profileContent = document.getElementById('profile-content');
-        const enterBtn = document.getElementById('enter-btn');
-        const views = document.querySelectorAll('.view');
-        
-        // --- Audio Logic ---
         const playlist = [
             { name: "Eminem - You dont know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1" },
             { name: "The Sound of Silence – Rising to the Night", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1" },
-            { name: "Desireless - Voyage Voyage", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=0yenl8sh&raw=1" } // Note: Third URL looks identical to second in prompt, using it as given.
+            { name: "Desireless - Voyage Voyage", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=0yenl8sh&raw=1" }
         ];
-        let currentSongIndex = 0;
-        let audioPlayer = new Audio();
-        let playlistInitialized = false;
 
-        function loadSong(index) {
-            if (index < 0 || index >= playlist.length) return;
-            currentSongIndex = index;
-            audioPlayer.src = playlist[index].url;
-            updatePlaylistUI();
-        }
+        let currentTrack = 0;
+        const audio = new Audio();
+        let typingActive = false;
 
-        function playNext() {
-            currentSongIndex++;
-            if (currentSongIndex >= playlist.length) {
-                currentSongIndex = 0; // Loop playlist
-            }
-            loadSong(currentSongIndex);
-            audioPlayer.play();
-        }
-
-        function updatePlaylistUI() {
-            const playlistContainer = document.getElementById('playlist-container');
-            playlistContainer.innerHTML = ''; // Clear
-
-            playlist.forEach((song, index) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item' + (index === currentSongIndex ? ' active-song' : '');
-                item.textContent = song.name;
-                item.onclick = () => {
-                    loadSong(index);
-                    audioPlayer.play();
-                };
-                playlistContainer.appendChild(item);
-            });
-        }
-
-        // --- Entry Event ---
-        enterBtn.addEventListener('click', () => {
-            entryScreen.style.display = 'none';
-            profileContent.classList.add('flex-show');
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
-
-            // Init audio and autoplay
-            if (!playlistInitialized) {
-                initializePlaylist();
-            }
-            loadSong(0);
-            audioPlayer.play().catch(e => {
-                // Autoplay may be blocked by browser. This handles that gently.
-                console.log("Autoplay was blocked. Click play on the music view.");
-            });
-
-            // Start heart rain
-            startHeartRain();
-        });
-
-        function initializePlaylist() {
-            // Add ended event listener
-            audioPlayer.addEventListener('ended', playNext);
-            updatePlaylistUI();
-            playlistInitialized = true;
-        }
-
-        // --- View Navigation ---
-        let typingTimeout; // To track and stop existing typing
-
-        function showView(viewId) {
-            // Hide all views
-            views.forEach(v => v.classList.remove('show', 'flex-show'));
-            // Remove typing class
-            const sobreView = document.getElementById('sobre-view');
-            sobreView.classList.remove('typing');
-            sobreView.textContent = ""; // Clear text
-            if(typingTimeout) clearTimeout(typingTimeout); // Stop current typing
-
-            // Show selected view
-            if (viewId === 'galeria') {
-                const galeria = document.getElementById(viewId + '-view');
-                galeria.classList.add('flex-show');
-                showSlides(1); // Start slideshow
-            } else if (viewId === 'musica') {
-                const musica = document.getElementById(viewId + '-view');
-                musica.classList.add('flex-show');
-                updatePlaylistUI(); // Refresh UI in case of changes
-            }
-             else {
-                document.getElementById(viewId + '-view').classList.add('show');
-            }
-
-            // Specific logic for Sobre Mim (Typing effect)
-            if (viewId === 'sobre') {
-                const phrase = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
-                typeWriter(sobreView, phrase, 0);
-            }
-        }
-
-        // Initially show Inicio
-        showView('inicio');
-
-        // --- Typing Effect Logic ---
-        function typeWriter(element, text, i) {
-            if (i < text.length) {
-                element.classList.add('typing');
-                element.textContent += text.charAt(i);
-                typingTimeout = setTimeout(() => typeWriter(element, text, i + 1), 75); // Typing speed
-            } else {
-                 element.classList.remove('typing');
-            }
-        }
-
-        // --- Galeria Slideshow Logic ---
-        let slideIndex = 1;
-
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function showSlides(n) {
-            const slides = document.querySelectorAll(".slide");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            slides.forEach(s => s.classList.remove('show'));
-            slides[slideIndex-1].classList.add('show');
-        }
-
-        // --- Heart Rain Logic ---
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '&#10084;'; // Heart emoji
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; // Between 3-5s
-            heart.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity between 0.5 and 1
-            heart.style.fontSize = (Math.random() * 10 + 15) + 'px'; // Random size
-
-            profileContent.appendChild(heart);
-
-            // Remove heart after animation
+        function startApp() {
+            document.getElementById('entry-screen').style.opacity = '0';
             setTimeout(() => {
-                heart.remove();
-            }, 5000); // Should match max animation duration
+                document.getElementById('entry-screen').style.display = 'none';
+                document.getElementById('profile-content').style.display = 'flex';
+                playMusic();
+                startHearts();
+            }, 1000);
         }
 
-        function startHeartRain() {
-            setInterval(createHeart, 300); // Creates a new heart every 0.3s
+        function playMusic() {
+            audio.src = playlist[currentTrack].url;
+            document.getElementById('track-name').innerText = playlist[currentTrack].name;
+            audio.play();
+            audio.onended = () => {
+                currentTrack = (currentTrack + 1) % playlist.length;
+                playMusic();
+            };
         }
 
+        function showSection(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+
+            if(id === 'sobre' && !typingActive) {
+                startTyping();
+            }
+            if(id === 'galeria') {
+                startSlider();
+            }
+        }
+
+        function startTyping() {
+            typingActive = true;
+            const text = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
+            let i = 0;
+            const container = document.getElementById('text-typing');
+            container.innerHTML = "";
+            function type() {
+                if (i < text.length) {
+                    container.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+
+        let slideIdx = 0;
+        function startSlider() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.style.display = "none");
+            slideIdx++;
+            if (slideIdx > slides.length) slideIdx = 1;
+            slides[slideIdx-1].style.display = "block";
+            setTimeout(startSlider, 3000);
+        }
+
+        function startHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💚';
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
     </script>
 </body>
 </html>
