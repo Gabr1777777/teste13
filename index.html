@@ -374,9 +374,9 @@
         /* TRAIL HEARTS */
         .trail-heart {
             position: absolute;
-            color: rgba(0, 255, 0, 0.7); /* Green with some transparency */
+            color: rgba(0, 255, 0, 0.7); 
             pointer-events: none;
-            z-index: 2000; /* Over everything */
+            z-index: 9999; /* Valor alto para aparecer acima de tudo */
             animation: trailFallFade 1s linear forwards;
             font-size: 14px;
             text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
@@ -483,13 +483,15 @@
         let slideIdx = 0;
         let isTyping = false; 
 
+        // Ativa o rastro desde o carregamento da página (para a tela de entrada)
+        document.addEventListener('mousemove', createTrailHeart);
+
         function startApp() {
             document.getElementById('entry-screen').style.display = 'none';
             document.getElementById('profile-content').style.display = 'flex';
             loadTrack(0);
             audio.play();
             setInterval(createHeart, 300);
-            document.addEventListener('mousemove', createTrailHeart); // Start trail effect
         }
 
         function loadTrack(idx) {
@@ -566,7 +568,6 @@
             setTimeout(() => h.remove(), 5000);
         }
 
-        // CREATE TRAIL HEART
         function createTrailHeart(e) {
             const heart = document.createElement('div');
             heart.innerHTML = "💚";
@@ -574,7 +575,7 @@
             heart.style.left = e.pageX + 'px';
             heart.style.top = e.pageY + 'px';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000); // Remove after animation
+            setTimeout(() => heart.remove(), 1000);
         }
     </script>
 </body>
