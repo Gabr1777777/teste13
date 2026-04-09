@@ -78,7 +78,6 @@
         }
 
         .nav-btn {
-            /* Fundo inicial semi-transparente nos botões para leitura */
             background: rgba(0, 0, 0, 0.5); 
             border: 1px solid #00ff00;
             color: #00ff00;
@@ -93,7 +92,6 @@
             text-align: center;
         }
 
-        /* Efeito de gradiente animado para os botões da barra lateral ao passar o mouse */
         @keyframes navBtnGradientAnim {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -141,7 +139,6 @@
 
         .profile-pic { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Estilos para Name e ID no perfil */
         .profile-name {
             font-size: 20px;
             font-weight: bold;
@@ -190,7 +187,6 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            /* Fundo inicial dos botões do slide */
             background: rgba(0, 255, 0, 0.4); 
             border: none;
             color: white;
@@ -201,7 +197,6 @@
             transition: 0.3s;
         }
 
-        /* Efeito de gradiente animado para os botões da galeria ao passar o mouse */
         @keyframes slideBtnGradientAnim {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -219,9 +214,9 @@
             max-width: 800px;
             color: #00ff00;
             text-shadow: 0 0 10px #00ff00;
+            min-height: 1.2em;
         }
 
-        /* PLAYER */
         .music-card {
             background: rgba(0, 34, 0, 0.8);
             border: 2px solid #00ff00;
@@ -271,7 +266,6 @@
             transition: 0.3s;
         }
 
-        /* Efeito de gradiente animado para o botão play/pause ao passar o mouse */
         @keyframes playBtnGradientAnim {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -299,7 +293,6 @@
             align-items: center;
             transition: 0.3s;
         }
-        /* Efeito de gradiente animado para os botões de pular música ao passar o mouse */
         @keyframes skipBtnGradientAnim {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -317,7 +310,6 @@
         .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #222; border-radius: 5px; outline: none; }
         .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #00ff00; border-radius: 50%; cursor: pointer; }
 
-        /* XAT SECTION */
         .xat-links-container {
             display: flex;
             flex-direction: column;
@@ -327,7 +319,6 @@
         }
 
         .xat-btn {
-            /* Fundo inicial dos botões do xat */
             background: rgba(0, 50, 0, 0.6); 
             border: 2px solid #00ff00;
             color: #00ff00;
@@ -339,7 +330,6 @@
             text-align: center;
         }
 
-        /* Efeito de gradiente animado para os botões do xat ao passar o mouse */
         @keyframes xatBtnGradientAnim {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -364,7 +354,6 @@
 
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         
-        /* Efeito de gradiente animado para o texto "Bem-vindo" */
         @keyframes welcomeGradientAnim {
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
@@ -476,6 +465,7 @@
         let currentTrack = 0;
         const audio = new Audio();
         let slideIdx = 0;
+        let isTyping = false; // Trava para evitar bugs no efeito de digitação
 
         function startApp() {
             document.getElementById('entry-screen').style.display = 'none';
@@ -520,8 +510,23 @@
         function typeEffect() {
             const text = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
             const target = document.getElementById('typing-text');
-            target.innerHTML = ""; let i = 0;
-            function type() { if(i < text.length) { target.innerHTML += text.charAt(i); i++; setTimeout(type, 50); } }
+            
+            // Se já estiver digitando ou se o texto já estiver completo, não faz nada
+            if (isTyping || target.innerText === text) return;
+            
+            isTyping = true;
+            target.innerHTML = ""; 
+            let i = 0;
+            
+            function type() { 
+                if(i < text.length) { 
+                    target.innerHTML += text.charAt(i); 
+                    i++; 
+                    setTimeout(type, 50); 
+                } else {
+                    isTyping = false; // Libera a trava ao terminar
+                }
+            }
             type();
         }
 
