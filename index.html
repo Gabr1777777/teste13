@@ -78,7 +78,8 @@
         }
 
         .nav-btn {
-            background: rgba(0, 0, 0, 0.5);
+            /* Fundo inicial semi-transparente nos botões para leitura */
+            background: rgba(0, 0, 0, 0.5); 
             border: 1px solid #00ff00;
             color: #00ff00;
             padding: 10px 20px;
@@ -92,9 +93,17 @@
             text-align: center;
         }
 
+        /* Efeito de gradiente animado para os botões da barra lateral ao passar o mouse */
+        @keyframes navBtnGradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
         .nav-btn:hover {
-            background: #00ff00;
-            color: #000;
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: navBtnGradientAnim 3s ease infinite;
+            color: black;
             box-shadow: 0 0 15px #00ff00;
         }
 
@@ -166,13 +175,28 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 255, 0, 0.4);
+            /* Fundo inicial dos botões do slide */
+            background: rgba(0, 255, 0, 0.4); 
             border: none;
             color: white;
             padding: 20px;
             cursor: pointer;
             font-size: 24px;
             z-index: 110;
+            transition: 0.3s;
+        }
+
+        /* Efeito de gradiente animado para os botões da galeria ao passar o mouse */
+        @keyframes slideBtnGradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .slide-btn:hover {
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: slideBtnGradientAnim 3s ease infinite;
+            color: #000;
         }
 
         #typing-text {
@@ -232,6 +256,20 @@
             transition: 0.3s;
         }
 
+        /* Efeito de gradiente animado para o botão play/pause ao passar o mouse */
+        @keyframes playBtnGradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .play-btn:hover {
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: playBtnGradientAnim 3s ease infinite;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00ff00;
+        }
+
         .skip-btn {
             background: transparent;
             border: 1px solid #00ff00;
@@ -246,7 +284,19 @@
             align-items: center;
             transition: 0.3s;
         }
-        .skip-btn:hover { background: rgba(0, 255, 0, 0.2); }
+        /* Efeito de gradiente animado para os botões de pular música ao passar o mouse */
+        @keyframes skipBtnGradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .skip-btn:hover {
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: skipBtnGradientAnim 3s ease infinite;
+            color: #000;
+            border-color: transparent;
+        }
 
         .volume-container { display: flex; align-items: center; gap: 10px; }
         .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #222; border-radius: 5px; outline: none; }
@@ -262,7 +312,8 @@
         }
 
         .xat-btn {
-            background: rgba(0, 50, 0, 0.6);
+            /* Fundo inicial dos botões do xat */
+            background: rgba(0, 50, 0, 0.6); 
             border: 2px solid #00ff00;
             color: #00ff00;
             padding: 15px;
@@ -271,6 +322,21 @@
             border-radius: 10px;
             transition: 0.3s;
             text-align: center;
+        }
+
+        /* Efeito de gradiente animado para os botões do xat ao passar o mouse */
+        @keyframes xatBtnGradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .xat-btn:hover {
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: xatBtnGradientAnim 3s ease infinite;
+            color: #000;
+            box-shadow: 0 0 20px #00ff00;
+            transform: scale(1.05);
         }
 
         .heart {
