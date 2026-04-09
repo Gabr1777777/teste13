@@ -2,150 +2,325 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil Neon Corrigido</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Neon</title>
     <style>
-        body { margin: 0; padding: 0; background: #000; color: white; font-family: sans-serif; overflow: hidden; }
-        
-        /* Tela de Entrada com o GIF Verde */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* TELA DE ENTRADA */
         #entry-screen {
-            position: fixed; width: 100%; height: 100%;
-            background: url("https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXF4ZzRnd3Jicm9nZzRnd3Jicm9nZzRnd3Jicm9nZzRndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vzKZWFUufrtm/giphy.gif") center/cover;
-            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* AQUI ESTÁ O SEU GIF */
+            background: url('https://i.imgur.com/YxLlfqT.gif') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
         #enter-btn {
-            padding: 15px 40px; font-size: 20px; cursor: pointer; border-radius: 50px; border: none;
-            background: linear-gradient(45deg, #00ff00, #fff); background-size: 200%;
-            animation: flow 3s infinite; box-shadow: 0 0 20px #00ff00; font-weight: bold;
-        }
-        @keyframes flow { 0% {background-position: 0%;} 50% {background-position: 100%;} 100% {background-position: 0%;} }
-
-        #profile-content { display: none; height: 100vh; position: relative; }
-
-        /* Nav Bar */
-        nav { 
-            display: flex; justify-content: center; background: rgba(0,0,0,0.9); 
-            padding: 15px; border-bottom: 2px solid #00ff00; 
-        }
-        nav button { 
-            background: none; border: 1px solid #00ff00; color: #00ff00; 
-            margin: 0 10px; padding: 8px 20px; cursor: pointer; border-radius: 5px;
+            padding: 20px 60px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            text-transform: uppercase;
+            /* Gradiente Animado Verde e Branco */
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            animation: gradientAnim 3s ease infinite;
+            box-shadow: 0 0 30px #00ff00;
+            transition: 0.3s;
         }
 
-        /* Galeria Neon */
-        #galeria-view {
-            display: none; width: 500px; height: 350px; margin: 50px auto;
-            border: 5px solid #00ff00; box-shadow: 0 0 15px #00ff00;
-            position: relative; overflow: hidden;
-        }
-        .slide { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .active-slide { display: block; }
+        #enter-btn:hover { transform: scale(1.1); }
 
-        /* Botões Slide */
-        .btn-slide {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(0,255,0,0.3); border: none; color: white;
-            padding: 10px; cursor: pointer; font-size: 20px;
+        @keyframes gradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
         }
-        .next { right: 0; } .prev { left: 0; }
 
-        /* Corações */
-        .heart { position: absolute; color: #00ff00; animation: fall 4s linear forwards; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
-        
-        .view { text-align: center; padding-top: 50px; }
-        #sobre-view { font-size: 20px; padding: 20px; }
+        /* PERFIL PRINCIPAL */
+        #profile-content {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+            background: #000;
+            position: relative;
+        }
+
+        /* BARRA HORIZONTAL */
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid #00ff00;
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 25px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        /* SEÇÕES */
+        .view {
+            display: none;
+            flex: 1;
+            padding: 50px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .active { display: block !important; }
+
+        /* SOBRE MIM */
+        #typing-text {
+            font-size: 26px;
+            max-width: 800px;
+            margin: 50px auto;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            line-height: 1.5;
+        }
+
+        /* GALERIA SLIDE COM BORDAS NEON */
+        .galeria-container {
+            width: 80%;
+            max-width: 650px;
+            height: 450px;
+            margin: 0 auto;
+            border: 5px solid #00ff00;
+            box-shadow: 0 0 25px #00ff00;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        /* BOTÕES DA GALERIA */
+        .slide-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 255, 0, 0.4);
+            border: none;
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 110;
+            transition: 0.3s;
+        }
+
+        .slide-btn:hover { background: #00ff00; color: #000; }
+        .prev { left: 0; }
+        .next { right: 0; }
+
+        /* CHUVA DE CORAÇÕES */
+        .heart {
+            position: absolute;
+            color: #00ff00;
+            font-size: 20px;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 5;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
+        }
+
+        /* PLAYER DE MÚSICA */
+        .playlist-item {
+            padding: 15px;
+            border: 1px solid #00ff00;
+            margin: 10px auto;
+            max-width: 400px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .playing { background: #00ff00 !important; color: #000 !important; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
-<div id="entry-screen">
-    <button id="enter-btn" onclick="entrar()">ENTRAR</button>
-</div>
+    <div id="entry-screen">
+        <button id="enter-btn" onclick="startApp()">Entrar</button>
+    </div>
 
-<div id="profile-content">
-    <nav>
-        <button onclick="show('inicio')">Início</button>
-        <button onclick="show('sobre')">Sobre Mim</button>
-        <button onclick="show('galeria')">Galeria</button>
-        <button onclick="show('musica')">Música</button>
-    </nav>
+    <div id="profile-content">
+        <nav>
+            <button class="nav-btn" onclick="showSection('inicio')">Inicio</button>
+            <button class="nav-btn" onclick="showSection('sobre')">Sobre Mim</button>
+            <button class="nav-btn" onclick="showSection('galeria')">Galeria</button>
+            <button class="nav-btn" onclick="showSection('musica')">Música</button>
+        </nav>
 
-    <div id="inicio" class="view"><h1>Bem-vindo ao Perfil</h1></div>
-    
-    <div id="sobre" class="view" style="display:none"><div id="typing"></div></div>
+        <div id="inicio" class="view active">
+            <h1 style="color:#00ff00; font-size: 50px; text-shadow: 0 0 20px #00ff00;">Meu Perfil</h1>
+            <p style="font-size: 20px;">Use o menu acima para explorar meu mundo neon.</p>
+        </div>
 
-    <div id="galeria" class="view" style="display:none">
-        <div id="galeria-view">
-            <img class="slide active-slide" src="https://i.imgur.com/a1pK0hL.jpg">
-            <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-            <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-            <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-            <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-            <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-            <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-            <img class="slide" src="https://i.imgur.com/Jn2BfWl.jpg">
-            <img class="slide" src="https://i.imgur.com/Q8TFcSx.jpg">
-            <img class="slide" src="https://i.imgur.com/a1pK0hL.jpg">
-            
-            <button class="btn-slide prev" onclick="move(-1)">❮</button>
-            <button class="btn-slide next" onclick="move(1)">❯</button>
+        <div id="sobre" class="view">
+            <div id="typing-text"></div>
+        </div>
+
+        <div id="galeria" class="view">
+            <div class="galeria-container">
+                <button class="slide-btn prev" onclick="changeSlide(-1)">❮</button>
+                <button class="slide-btn next" onclick="changeSlide(1)">❯</button>
+                
+                <img src="https://i.imgur.com/a1pK0hL.jpeg" class="slide">
+                <img src="https://i.imgur.com/Jn2BfWl.jpeg" class="slide">
+                <img src="https://i.imgur.com/Q8TFcSx.jpeg" class="slide">
+                <img src="https://i.imgur.com/a1pK0hL.jpeg" class="slide">
+                <img src="https://i.imgur.com/Jn2BfWl.jpeg" class="slide">
+                <img src="https://i.imgur.com/Q8TFcSx.jpeg" class="slide">
+                <img src="https://i.imgur.com/a1pK0hL.jpeg" class="slide">
+                <img src="https://i.imgur.com/Jn2BfWl.jpeg" class="slide">
+                <img src="https://i.imgur.com/Q8TFcSx.jpeg" class="slide">
+                <img src="https://i.imgur.com/a1pK0hL.jpeg" class="slide">
+            </div>
+        </div>
+
+        <div id="musica" class="view">
+            <h2 style="color: #00ff00; margin-bottom: 30px;">Playlist</h2>
+            <div id="music-list"></div>
         </div>
     </div>
 
-    <div id="musica" class="view" style="display:none"><h2>Tocando Playlist Neon...</h2></div>
-</div>
+    <script>
+        const playlist = [
+            { name: "Eminem - You dont know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1" },
+            { name: "The Sound of Silence – Rising to the Night", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1" },
+            { name: "Desireless - Voyage Voyage", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=0yenl8sh&raw=1" }
+        ];
 
-<script>
-    const audio = new Audio();
-    const playlist = [
-        "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1",
-        "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1"
-    ];
-    let trackIdx = 0;
+        let currentTrack = 0;
+        const audio = new Audio();
+        let slideIdx = 0;
+        let typingActive = false;
 
-    function entrar() {
-        document.getElementById('entry-screen').style.display = 'none';
-        document.getElementById('profile-content').style.display = 'block';
-        playMusic();
-        setInterval(createHeart, 300);
-    }
+        function startApp() {
+            document.getElementById('entry-screen').style.display = 'none';
+            document.getElementById('profile-content').style.display = 'flex';
+            playTrack(0);
+            startHeartRain();
+        }
 
-    function playMusic() {
-        audio.src = playlist[trackIdx];
-        audio.play();
-        audio.onended = () => { trackIdx = (trackIdx + 1) % playlist.length; playMusic(); };
-    }
+        function playTrack(index) {
+            currentTrack = index;
+            audio.src = playlist[index].url;
+            audio.play();
+            updateMusicUI();
+            audio.onended = () => {
+                currentTrack = (currentTrack + 1) % playlist.length;
+                playTrack(currentTrack);
+            };
+        }
 
-    function show(id) {
-        ['inicio','sobre','galeria','musica'].forEach(v => document.getElementById(v).style.display = 'none');
-        document.getElementById(id).style.display = 'block';
-        if(id === 'sobre') startTyping();
-    }
+        function updateMusicUI() {
+            const list = document.getElementById('music-list');
+            list.innerHTML = "";
+            playlist.forEach((track, i) => {
+                const div = document.createElement('div');
+                div.className = "playlist-item " + (i === currentTrack ? "playing" : "");
+                div.innerText = track.name;
+                div.onclick = () => playTrack(i);
+                list.appendChild(div);
+            });
+        }
 
-    function startTyping() {
-        const txt = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
-        let i = 0; document.getElementById('typing').innerHTML = "";
-        function type() { if(i < txt.length) { document.getElementById('typing').innerHTML += txt.charAt(i); i++; setTimeout(type, 50); } }
-        type();
-    }
+        function showSection(id) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
 
-    let slideIdx = 0;
-    function move(n) {
-        const slides = document.getElementsByClassName('slide');
-        slides[slideIdx].classList.remove('active-slide');
-        slideIdx = (slideIdx + n + slides.length) % slides.length;
-        slides[slideIdx].classList.add('active-slide');
-    }
+            if (id === 'sobre') {
+                typeEffect();
+            } else if (id === 'galeria') {
+                showSlides(0);
+            }
+        }
 
-    function createHeart() {
-        const h = document.createElement('div');
-        h.className = 'heart'; h.innerHTML = '💚';
-        h.style.left = Math.random() * 100 + 'vw';
-        h.style.fontSize = Math.random() * 20 + 10 + 'px';
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 4000);
-    }
-</script>
+        function typeEffect() {
+            const text = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
+            const target = document.getElementById('typing-text');
+            target.innerHTML = "";
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    target.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 60);
+                }
+            }
+            type();
+        }
+
+        function showSlides(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.style.display = "none");
+            slideIdx = (n + slides.length) % slides.length;
+            slides[slideIdx].style.display = "block";
+        }
+
+        function changeSlide(n) {
+            showSlides(slideIdx + n);
+        }
+
+        function startHeartRain() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = "💚";
+                heart.className = "heart";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+    </script>
 </body>
 </html>
