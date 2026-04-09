@@ -216,7 +216,7 @@
             100% { transform: translate(-100%, 0); }
         }
 
-        .controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; }
+        .controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; }
         
         .play-btn {
             background: #00ff00;
@@ -231,6 +231,22 @@
             align-items: center;
             transition: 0.3s;
         }
+
+        .skip-btn {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .skip-btn:hover { background: rgba(0, 255, 0, 0.2); }
 
         .volume-container { display: flex; align-items: center; gap: 10px; }
         .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #222; border-radius: 5px; outline: none; }
@@ -255,14 +271,6 @@
             border-radius: 10px;
             transition: 0.3s;
             text-align: center;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
-        }
-
-        .xat-btn:hover {
-            background: #00ff00;
-            color: #000;
-            box-shadow: 0 0 20px #00ff00;
-            transform: scale(1.05);
         }
 
         .heart {
@@ -334,7 +342,9 @@
                         <span class="marquee-text" id="track-name">You don't know</span>
                     </div>
                     <div class="controls">
+                        <button class="skip-btn" onclick="changeTrack(-1)">⏮</button>
                         <button class="play-btn" onclick="togglePlay()" id="play-pause">⏸</button>
+                        <button class="skip-btn" onclick="changeTrack(1)">⏭</button>
                     </div>
                     <div class="volume-container">
                         <span style="font-size: 12px;">🔈</span>
@@ -374,10 +384,17 @@
         }
 
         function loadTrack(idx) {
-            currentTrack = idx;
-            audio.src = playlist[idx].url;
-            document.getElementById('track-title').innerText = playlist[idx].title;
-            document.getElementById('track-name').innerText = playlist[idx].name;
+            currentTrack = (idx + playlist.length) % playlist.length;
+            audio.src = playlist[currentTrack].url;
+            document.getElementById('track-title').innerText = playlist[currentTrack].title;
+            document.getElementById('track-name').innerText = playlist[currentTrack].name;
+            if (!audio.paused) audio.play();
+        }
+
+        function changeTrack(dir) {
+            loadTrack(currentTrack + dir);
+            audio.play();
+            document.getElementById('play-pause').innerText = "⏸";
         }
 
         function togglePlay() {
@@ -388,11 +405,7 @@
 
         function setVolume(val) { audio.volume = val; }
 
-        audio.onended = () => {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            loadTrack(currentTrack);
-            audio.play();
-        };
+        audio.onended = () => changeTrack(1);
 
         function showSection(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
