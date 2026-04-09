@@ -370,6 +370,22 @@
             animation: welcomeGradientAnim 3s ease infinite;
             display: inline-block;
         }
+
+        /* TRAIL HEARTS */
+        .trail-heart {
+            position: absolute;
+            color: rgba(0, 255, 0, 0.7); /* Green with some transparency */
+            pointer-events: none;
+            z-index: 2000; /* Over everything */
+            animation: trailFallFade 1s linear forwards;
+            font-size: 14px;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+
+        @keyframes trailFallFade {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) translateY(20px) scale(0.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -465,7 +481,7 @@
         let currentTrack = 0;
         const audio = new Audio();
         let slideIdx = 0;
-        let isTyping = false; // Trava para evitar bugs no efeito de digitação
+        let isTyping = false; 
 
         function startApp() {
             document.getElementById('entry-screen').style.display = 'none';
@@ -473,6 +489,7 @@
             loadTrack(0);
             audio.play();
             setInterval(createHeart, 300);
+            document.addEventListener('mousemove', createTrailHeart); // Start trail effect
         }
 
         function loadTrack(idx) {
@@ -511,7 +528,6 @@
             const text = "Olhe atentamente para o presente que você está construindo: ele deve se parecer com o futuro com o qual você está sonhando.";
             const target = document.getElementById('typing-text');
             
-            // Se já estiver digitando ou se o texto já estiver completo, não faz nada
             if (isTyping || target.innerText === text) return;
             
             isTyping = true;
@@ -524,7 +540,7 @@
                     i++; 
                     setTimeout(type, 50); 
                 } else {
-                    isTyping = false; // Libera a trava ao terminar
+                    isTyping = false; 
                 }
             }
             type();
@@ -548,6 +564,17 @@
             h.style.animationDuration = (Math.random() * 3 + 2) + "s";
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 5000);
+        }
+
+        // CREATE TRAIL HEART
+        function createTrailHeart(e) {
+            const heart = document.createElement('div');
+            heart.innerHTML = "💚";
+            heart.className = 'trail-heart';
+            heart.style.left = e.pageX + 'px';
+            heart.style.top = e.pageY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000); // Remove after animation
         }
     </script>
 </body>
