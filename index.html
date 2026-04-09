@@ -14,7 +14,7 @@
             background-color: #002200; 
             overflow: hidden;
             color: white;
-            display: flex; /* Para layout de barra lateral */
+            display: flex;
         }
 
         /* TELA DE ENTRADA */
@@ -54,41 +54,40 @@
             100%{background-position:0% 50%}
         }
 
-        /* CONTEÚDO PRINCIPAL (Layout lateral) */
         #profile-content {
-            display: none; /* Inicialmente oculto */
+            display: none;
             width: 100%;
             height: 100vh;
             background-color: #002200;
             position: relative;
-            display: flex; /* Barra lateral + Área de conteúdo */
+            display: flex;
         }
 
-        /* BARRA LATERAL (Esquerda, vertical) */
         nav {
-            width: 200px; /* Largura da barra lateral */
-            background: rgba(0, 0, 0, 0.9);
-            border-right: 2px solid #00ff00; /* Borda vertical */
+            width: 200px;
+            background: transparent;
+            border-right: 2px solid rgba(0, 255, 0, 0.3);
             display: flex;
-            flex-direction: column; /* Botões na vertical */
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 30px 10px;
+            padding: 0 10px;
             z-index: 100;
-            height: 100%; /* Ocupa altura total */
-            box-sizing: border-box; /* Inclui padding na largura */
+            height: 100%;
+            box-sizing: border-box;
         }
 
         .nav-btn {
-            background: transparent;
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid #00ff00;
             color: #00ff00;
             padding: 10px 20px;
-            margin: 10px 0; /* Espaçamento vertical */
+            margin: 10px 0;
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
             transition: 0.3s;
-            width: 100%; /* Botões ocupam largura da nav */
+            width: 100%;
             box-sizing: border-box;
             text-align: center;
         }
@@ -99,53 +98,32 @@
             box-shadow: 0 0 15px #00ff00;
         }
 
-        /* ÁREA DE CONTEÚDO (Direita) */
         #main-content {
-            flex: 1; /* Ocupa o resto do espaço à direita */
+            flex: 1;
             height: 100%;
-            overflow-y: auto; /* Permite scroll se conteúdo for grande */
             position: relative;
         }
 
         .view {
-            display: none; /* Oculto por padrão */
+            display: none;
             padding: 50px;
             text-align: center;
             z-index: 10;
-            height: 100%; /* Garante que ocupa altura total */
-            box-sizing: border-box;
-        }
-
-        .active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; } /* Exibe como flex para centralizar conteúdo */
-
-        /* INÍCIO */
-        #inicio h1 {
-            color:#00ff00; 
-            font-size: 45px;
-            margin-bottom: 20px;
-        }
-
-        /* PERFIL (Novo) */
-        #perfil-view {
-            display: none; /* Oculto por padrão */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 50px;
-            box-sizing: border-box;
             height: 100%;
+            box-sizing: border-box;
         }
 
-        /* Moldura Flutuante da Foto */
+        .active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; }
+
         .profile-pic-container {
             width: 200px;
             height: 200px;
             border: 5px solid #00ff00;
-            border-radius: 50%; /* Foto redonda */
+            border-radius: 50%;
             box-shadow: 0 0 25px #00ff00;
             overflow: hidden;
             margin-bottom: 30px;
-            animation: float 4s ease-in-out infinite; /* Efeito flutuante */
+            animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
@@ -153,37 +131,22 @@
             50% { transform: translateY(-15px); }
         }
 
-        .profile-pic {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .profile-pic { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Lista de Detalhes do Perfil */
         .profile-details {
             list-style: none;
-            padding: 0;
+            padding: 20px;
             margin: 0;
             text-align: left;
             font-size: 18px;
-            color: #ffffff;
             border: 1px solid #00ff00;
-            padding: 20px;
             border-radius: 10px;
             background: rgba(0, 34, 0, 0.5);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
 
-        .profile-details li {
-            margin-bottom: 10px;
-        }
+        .profile-details li { margin-bottom: 10px; }
+        .profile-details li strong { color: #00ff00; margin-right: 10px; }
 
-        .profile-details li strong {
-            color: #00ff00;
-            margin-right: 10px;
-        }
-
-        /* GALERIA */
         .galeria-container {
             width: 85%;
             max-width: 600px;
@@ -197,12 +160,7 @@
             background: #001100;
         }
 
-        .slide {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
+        .slide { width: 100%; height: 100%; object-fit: cover; display: none; }
 
         .slide-btn {
             position: absolute;
@@ -217,36 +175,60 @@
             z-index: 110;
         }
 
-        .slide-btn:hover { background: #00ff00; color: #000; }
-        .prev { left: 0; border-radius: 0 10px 10px 0; }
-        .next { right: 0; border-radius: 10px 0 0 10px; }
-
-        /* EFEITO ESCREVENDO */
         #typing-text {
             font-size: 24px;
             max-width: 800px;
-            margin: 40px auto;
             color: #00ff00;
             text-shadow: 0 0 10px #00ff00;
         }
 
-        /* CORAÇÕES */
+        /* --- PLAYER SOFISTICADO --- */
+        .music-card {
+            background: rgba(0, 34, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+            text-align: center;
+        }
+
+        .music-card h3 { color: #00ff00; margin-bottom: 5px; }
+        .music-card p { font-size: 14px; margin-bottom: 20px; opacity: 0.8; }
+
+        .controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; }
+        
+        .play-btn {
+            background: #00ff00;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .play-btn:hover { transform: scale(1.1); box-shadow: 0 0 15px #00ff00; }
+
+        .progress-container { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 5px; margin-bottom: 15px; cursor: pointer; position: relative; }
+        .progress-bar { height: 100%; background: #00ff00; width: 0%; border-radius: 5px; }
+
+        .volume-container { display: flex; align-items: center; gap: 10px; }
+        .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: #222; border-radius: 5px; outline: none; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #00ff00; border-radius: 50%; cursor: pointer; }
+
         .heart {
             position: absolute;
             color: #00ff00;
             animation: fall linear forwards;
             text-shadow: 0 0 10px #00ff00;
-            z-index: 5; /* Garante que os corações ficam sobre o conteúdo */
+            z-index: 5;
         }
 
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* MÚSICA */
-        #music-list {
-            width: 80%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
     </style>
 </head>
 <body>
@@ -266,7 +248,7 @@
 
         <div id="main-content">
             <div id="inicio" class="view active">
-                <h1>Bem-vindo</h1>
+                <h1 style="color:#00ff00; font-size: 45px;">Bem-vindo</h1>
                 <p>Navegue pelas abas na barra lateral para conhecer meu perfil.</p>
             </div>
 
@@ -287,8 +269,8 @@
 
             <div id="galeria" class="view">
                 <div class="galeria-container">
-                    <button class="slide-btn prev" onclick="changeSlide(-1)">❮</button>
-                    <button class="slide-btn next" onclick="changeSlide(1)">❯</button>
+                    <button class="slide-btn" style="left:0" onclick="changeSlide(-1)">❮</button>
+                    <button class="slide-btn" style="right:0" onclick="changeSlide(1)">❯</button>
                     
                     <img src="https://i.imgur.com/0h6IQIZ.jpeg" class="slide">
                     <img src="https://i.imgur.com/YDKnxJi.jpeg" class="slide">
@@ -300,17 +282,32 @@
             </div>
 
             <div id="musica" class="view">
-                <h2 style="color: #00ff00;">Minha Playlist</h2>
-                <div id="music-list"></div>
+                <div class="music-card">
+                    <h3 id="track-title">Eminem</h3>
+                    <p id="track-name">You don't know</p>
+                    
+                    <div class="progress-container" onclick="seek(event)">
+                        <div class="progress-bar" id="progress"></div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="play-btn" onclick="togglePlay()" id="play-pause">⏸</button>
+                    </div>
+
+                    <div class="volume-container">
+                        <span style="font-size: 12px;">🔈</span>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)">
+                        <span style="font-size: 12px;">🔊</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         const playlist = [
-            { name: "Eminem - You dont know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1" },
-            { name: "The Sound of Silence – Rising to the Night", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1" },
-            { name: "Desireless - Voyage Voyage", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=0yenl8sh&raw=1" }
+            { title: "Eminem", name: "You don't know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=wy1w0icm&raw=1" },
+            { title: "The Sound of Silence", name: "Rising to the Night", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=qty8093e&raw=1" }
         ];
 
         let currentTrack = 0;
@@ -319,48 +316,53 @@
 
         function startApp() {
             document.getElementById('entry-screen').style.display = 'none';
-            document.getElementById('profile-content').style.display = 'flex'; // Exibe como flex para layout lateral
-            playTrack(0);
+            document.getElementById('profile-content').style.display = 'flex';
+            loadTrack(0);
+            audio.play();
             setInterval(createHeart, 300);
         }
 
-        function playTrack(idx) {
+        function loadTrack(idx) {
             currentTrack = idx;
             audio.src = playlist[idx].url;
-            audio.play();
-            updateMusicUI();
-            audio.onended = () => playTrack((currentTrack + 1) % playlist.length);
+            document.getElementById('track-title').innerText = playlist[idx].title;
+            document.getElementById('track-name').innerText = playlist[idx].name;
         }
 
-        function updateMusicUI() {
-            const list = document.getElementById('music-list');
-            list.innerHTML = "";
-            playlist.forEach((track, i) => {
-                const div = document.createElement('div');
-                div.style.padding = "10px";
-                div.style.border = "1px solid #00ff00";
-                div.style.margin = "10px";
-                div.style.cursor = "pointer";
-                div.style.borderRadius = "5px";
-                if(i === currentTrack) div.style.background = "#00ff00", div.style.color = "#000";
-                div.innerText = track.name;
-                div.onclick = () => playTrack(i);
-                list.appendChild(div);
-            });
+        function togglePlay() {
+            const btn = document.getElementById('play-pause');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "⏸";
+            } else {
+                audio.pause();
+                btn.innerText = "▶";
+            }
         }
+
+        function setVolume(val) { audio.volume = val; }
+
+        audio.ontimeupdate = () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progress').style.width = progress + "%";
+        };
+
+        function seek(event) {
+            const container = event.currentTarget;
+            const percent = event.offsetX / container.offsetWidth;
+            audio.currentTime = percent * audio.duration;
+        }
+
+        audio.onended = () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+            audio.play();
+        };
 
         function showSection(id) {
-            // Oculta todas as seções
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            
-            // Exibe a seção selecionada
-            if (id === 'perfil') {
-                document.getElementById('perfil-view').classList.add('active');
-            } else {
-                document.getElementById(id).classList.add('active');
-            }
-
-            // Efeitos específicos
+            if (id === 'perfil') document.getElementById('perfil-view').classList.add('active');
+            else document.getElementById(id).classList.add('active');
             if(id === 'sobre') typeEffect();
             if(id === 'galeria') showSlides(0);
         }
