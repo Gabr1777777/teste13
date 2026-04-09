@@ -282,6 +282,24 @@
         }
 
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        
+        /* Efeito de gradiente animado para o texto "Bem-vindo" */
+        @keyframes welcomeGradientAnim {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .welcome-text {
+            font-size: 45px;
+            font-weight: bold;
+            background: linear-gradient(270deg, #00ff00, #ffffff, #00ff00);
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: welcomeGradientAnim 3s ease infinite;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -302,7 +320,7 @@
 
         <div id="main-content">
             <div id="inicio" class="view active">
-                <h1 style="color:#00ff00; font-size: 45px;">Bem-vindo</h1>
+                <h1 class="welcome-text">Bem-vindo</h1>
                 <p>Navegue pelas abas na barra lateral para conhecer meu perfil.</p>
             </div>
 
